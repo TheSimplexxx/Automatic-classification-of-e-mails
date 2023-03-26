@@ -21,3 +21,5 @@ C:\University\OOP\TESTS\Test\bin\Debug\K4os.Hash.xxHash.dll
 C:\University\OOP\TESTS\Test\bin\Debug\MySql.Data.xml
 C:\University\OOP\TESTS\Test\obj\Debug\Test.exe.config
 C:\University\OOP\TESTS\Test\obj\Debug\Test.csproj.CopyComplete
+C:\University\OOP\TESTS\Test\obj\Debug\Test.RegisterForm.resources
+C:\University\OOP\TESTS\Test\obj\Debug\Test.MainForm.resources
