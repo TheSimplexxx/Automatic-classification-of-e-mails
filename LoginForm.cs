@@ -101,13 +101,13 @@ namespace Test
             adapter.Fill(table);
 
             if (table.Rows.Count > 0)
-            { 
+            {
                 this.Hide();
-            MainForm mainForm = new MainForm();
-            mainForm.Show();
-             }
+                MailsRev mailrev = new MailsRev();
+                mailrev.Show();
+            }
             else
-                MessageBox.Show("No");
+                MessageBox.Show("Таких даних не існує");
 
         }
 

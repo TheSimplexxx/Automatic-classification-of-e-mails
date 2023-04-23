@@ -22,5 +22,5 @@ C:\University\OOP\TESTS\Test\bin\Debug\MySql.Data.xml
 C:\University\OOP\TESTS\Test\obj\Debug\Test.exe.config
 C:\University\OOP\TESTS\Test\obj\Debug\Test.csproj.CopyComplete
 C:\University\OOP\TESTS\Test\obj\Debug\Test.RegisterForm.resources
-C:\University\OOP\TESTS\Test\obj\Debug\Test.MainForm.resources
 C:\University\OOP\TESTS\Test\obj\Debug\Test.MailsRev.resources
+C:\University\OOP\TESTS\Test\obj\Debug\Test.MailSend.resources

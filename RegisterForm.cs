@@ -17,12 +17,18 @@ namespace Test
         {
             InitializeComponent();
 
-            UserNameField.Text = "Ввидите имя";
+            UserNameField.Text = "Введіть ім'я";
             UserNameField.ForeColor = Color.Gray;
 
-            UserSurNameField.Text = "Ввидите фамилию";
+            UserSurNameField.Text = "Введіть прізвище";
             UserSurNameField.ForeColor = Color.Gray;
-      
+
+            EmailEnter.Text = "Введіть логін";
+            EmailEnter.ForeColor = Color.Gray;
+
+            PassEnter.Text = "Введіть пароль";
+            PassEnter.ForeColor = Color.Gray;
+
         }
 
   
@@ -52,7 +58,7 @@ namespace Test
 
         private void UserNameField_Enter(object sender, EventArgs e)
         {
-            if (UserNameField.Text == "Ввидите имя")
+            if (UserNameField.Text == "Введіть ім'я")
             {
 
                 UserNameField.Text = "";
@@ -66,14 +72,14 @@ namespace Test
             if (UserNameField.Text == "")
             {
 
-                UserNameField.Text = "Ввидите имя";
+                UserNameField.Text = "Введіть ім'я";
                 UserNameField.ForeColor = Color.Gray;
             }
         }
 
         private void UserSurNameField_Enter(object sender, EventArgs e)
         {
-            if (UserSurNameField.Text == "Ввидите фамилию")
+            if (UserSurNameField.Text == "Введіть прізвище")
             {
 
                 UserSurNameField.Text = "";
@@ -87,21 +93,62 @@ namespace Test
 
             if (UserSurNameField.Text == "")
             {
-                UserSurNameField.Text = "Ввидите фамилию";
+                UserSurNameField.Text = "Введіть прізвище";
                 UserSurNameField.ForeColor = Color.Gray;
             }
         }
+        private void PassEnter_Enter(object sender, EventArgs e)
+        {
+            if (PassEnter.Text == "Введіть пароль")
+            {
+
+                PassEnter.Text = "";
+                PassEnter.ForeColor = Color.Black;
+
+            }
+        }
+
+        private void PassEnter_Leave(object sender, EventArgs e)
+        {
+            if (PassEnter.Text == "")
+            {
+
+                PassEnter.Text = "Введіть пароль";
+                PassEnter.ForeColor = Color.Gray;
+            }
+        }
+        private void EmailEnter_Enter(object sender, EventArgs e)
+        {
+            if (EmailEnter.Text == "Введіть логін")
+            {
+
+                EmailEnter.Text = "";
+                EmailEnter.ForeColor = Color.Black;
+
+            }
+        }
+
+        private void EmailEnter_Leave(object sender, EventArgs e)
+        {
+            if (EmailEnter.Text == "")
+            {
+
+                EmailEnter.Text = "Введіть логін";
+                EmailEnter.ForeColor = Color.Gray;
+            }
+        }
+
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (UserNameField.Text == "Ввидите имя")
+            if (UserNameField.Text == "Введіть ім'я")
             {
-                MessageBox.Show("Ввидите имя");
+                MessageBox.Show("Введіть ім'я");
                 return;
             }
-            if (UserSurNameField.Text == "Ввидите фамилию")
+            if (UserSurNameField.Text == "Введіть прізвище")
             {
-                MessageBox.Show("Ввидите фамилию");
+                MessageBox.Show("Введіть прізвище");
                 return;
             }
             if (EmailEnter.Text == "")
@@ -129,9 +176,9 @@ namespace Test
             db.openconetion();
 
             if (command.ExecuteNonQuery() == 1)
-                MessageBox.Show("Аккаунт создан");
+                MessageBox.Show("Обліковий запис створено");
             else
-                MessageBox.Show("Аккаунт не создан");
+                MessageBox.Show("Обліковий запис не створено");
 
             db.closeconetion();
 
@@ -151,7 +198,7 @@ namespace Test
 
             if (table.Rows.Count > 0)
             {
-                MessageBox.Show("ЛОГИН ЗАНЯТ");
+                MessageBox.Show("ЛОГІН ЗАНЯТО");
                 return true;
             }
             else
@@ -165,5 +212,8 @@ namespace Test
             LoginForm login = new LoginForm();
             login.Show();
         }
+
+       
+       
     }
 }

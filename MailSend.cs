@@ -12,32 +12,32 @@ using MySql.Data.MySqlClient;
 namespace Test
 {
    
-    public partial class MainForm : Form
+    public partial class MailSend : Form
     {
 
         public class EmailClassifier
         {
             public int Classify(string subject, string body)
             {
-                if (subject.Contains("спам") || body.Contains("спам"))
+                if (subject.Contains("спам") || body.Contains("спам") || subject.Contains("реклама") || body.Contains("реклама") || subject.Contains("пропозиція") || body.Contains("пропозиція"))
                 {
-                    return 1; 
+                    return 1;
                 }
-                else if (subject.Contains("важливе") || body.Contains("важливе"))
+                else if (subject.Contains("важливе") || body.Contains("важливе") || subject.Contains("термінове") || body.Contains("термінове") || subject.Contains("офіційне") || body.Contains("офіційне"))
                 {
-                    return 2; 
+                    return 2;
                 }
-                else if (subject.Contains("акція") || body.Contains("акція"))
+                else if (subject.Contains("акція") || body.Contains("акція") || subject.Contains("знижка") || body.Contains("знижка") || subject.Contains("подарунок") || body.Contains("подарунок") || subject.Contains("спеціальна пропозиція") || body.Contains("спеціальна пропозиція"))
                 {
-                    return 3; 
+                    return 3;
                 }
                 else
                 {
-                    return 1; 
+                    return 1;
                 }
             }
         }
-        public MainForm()
+        public MailSend()
         {
             InitializeComponent();
             Tema.Text = "Введіть тему вашого листа";
@@ -55,6 +55,10 @@ namespace Test
         {
             Application.Exit();
         }
+        private void label1_MouseDown(object sender, MouseEventArgs e)
+        {
+            lastpoint = new Point(e.X, e.Y);
+        }
         Point lastpoint;
         private void label1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -70,51 +74,48 @@ namespace Test
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            MailRev.Visible = false;
-            Send.Visible = true;
-            MailText.Visible = true;
-            Tema.Visible = true;
-            ToWhom.Visible = true;
+           
             
         }
 
         private void Review_Click(object sender, EventArgs e)
         {
-            MailRev.Visible = true;
-            Send.Visible = false;
-            MailText.Visible = false;
-            ToWhom.Visible = false;
-            Tema.Visible = false;
+            this.Hide();
+            MailsRev mailrev = new MailsRev();
+            mailrev.Show();
             
         }
 
 
         private void Send_Click(object sender, EventArgs e)
         {
-
-
-            
             var classifier = new EmailClassifier();
             int classification = classifier.Classify(Tema.Text, MailText.Text);
 
-            
             string connectionString = "server=localhost;port=3306;username=root;password=root;database=proger;";
             string query = "INSERT INTO Mails (Tema, MailText, ToWhom, Class) VALUES (@Tema, @MailText, @ToWhom, @Class)";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            using (MySqlCommand command = new MySqlCommand(query, connection))
+            try
             {
-                connection.Open();
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    connection.Open();
 
-                command.Parameters.AddWithValue("@Tema", Tema.Text);
-                command.Parameters.AddWithValue("@MailText", MailText.Text);
-                command.Parameters.AddWithValue("@ToWhom", ToWhom.Text);
-                command.Parameters.AddWithValue("@Class", classification); 
+                    command.Parameters.AddWithValue("@Tema", Tema.Text);
+                    command.Parameters.AddWithValue("@MailText", MailText.Text);
+                    command.Parameters.AddWithValue("@ToWhom", ToWhom.Text);
+                    command.Parameters.AddWithValue("@Class", classification);
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Лист успішно відправлено!");
             }
-
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка відправки листа: {ex.Message}");
+            }
         }
 
         private void Tema_MouseEnter(object sender, EventArgs e)
@@ -170,6 +171,8 @@ namespace Test
                 MailText.ForeColor = Color.Gray;
             }
         }
+
+        
     }
 }
 

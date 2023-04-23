@@ -79,7 +79,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(239, 43);
             this.button2.TabIndex = 9;
-            this.button2.Text = "Авторизаваться";
+            this.button2.Text = "Авторизуватися";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -88,10 +88,10 @@
             this.PassEnter.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PassEnter.Location = new System.Drawing.Point(418, 221);
             this.PassEnter.Name = "PassEnter";
-            this.PassEnter.PasswordChar = '*';
             this.PassEnter.Size = new System.Drawing.Size(249, 42);
             this.PassEnter.TabIndex = 8;
-            this.PassEnter.UseSystemPasswordChar = true;
+            this.PassEnter.Enter += new System.EventHandler(this.PassEnter_Enter);
+            this.PassEnter.Leave += new System.EventHandler(this.PassEnter_Leave);
             // 
             // UserSurNameField
             // 
@@ -118,7 +118,7 @@
             this.buttonRegister.Name = "buttonRegister";
             this.buttonRegister.Size = new System.Drawing.Size(249, 61);
             this.buttonRegister.TabIndex = 5;
-            this.buttonRegister.Text = "Зарегестрироватся";
+            this.buttonRegister.Text = "Зареєструватись";
             this.buttonRegister.UseVisualStyleBackColor = false;
             this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
             // 
@@ -127,10 +127,10 @@
             this.EmailEnter.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.EmailEnter.Location = new System.Drawing.Point(93, 221);
             this.EmailEnter.Name = "EmailEnter";
-            this.EmailEnter.PasswordChar = '*';
             this.EmailEnter.Size = new System.Drawing.Size(249, 42);
             this.EmailEnter.TabIndex = 4;
-            this.EmailEnter.UseSystemPasswordChar = true;
+            this.EmailEnter.Enter += new System.EventHandler(this.EmailEnter_Enter);
+            this.EmailEnter.Leave += new System.EventHandler(this.EmailEnter_Leave);
             // 
             // pictureBox2
             // 
@@ -197,7 +197,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(796, 126);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Регистрация";
+            this.label1.Text = "Реєстрація";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
             this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label1_MouseMove);
