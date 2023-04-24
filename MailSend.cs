@@ -19,22 +19,27 @@ namespace Test
         {
             public int Classify(string subject, string body)
             {
-                if (subject.Contains("спам") || body.Contains("спам") || subject.Contains("реклама") || body.Contains("реклама") || subject.Contains("пропозиція") || body.Contains("пропозиція"))
-                {
-                    return 1;
-                }
-                else if (subject.Contains("важливе") || body.Contains("важливе") || subject.Contains("термінове") || body.Contains("термінове") || subject.Contains("офіційне") || body.Contains("офіційне"))
+                if (ContainsIgnoreCase(subject, "важливе") || ContainsIgnoreCase(body, "важливе") || ContainsIgnoreCase(subject, "термінове") || ContainsIgnoreCase(body, "термінове") || ContainsIgnoreCase(subject, "офіційне") || ContainsIgnoreCase(body, "офіційне"))
                 {
                     return 2;
                 }
-                else if (subject.Contains("акція") || body.Contains("акція") || subject.Contains("знижка") || body.Contains("знижка") || subject.Contains("подарунок") || body.Contains("подарунок") || subject.Contains("спеціальна пропозиція") || body.Contains("спеціальна пропозиція"))
+                else if (ContainsIgnoreCase(subject, "акція") || ContainsIgnoreCase(body, "акція") || ContainsIgnoreCase(subject, "знижка") || ContainsIgnoreCase(body, "знижка") || ContainsIgnoreCase(subject, "подарунок") || ContainsIgnoreCase(body, "подарунок") || ContainsIgnoreCase(subject, "спеціальна пропозиція") || ContainsIgnoreCase(body, "спеціальна пропозиція"))
                 {
                     return 3;
+                }
+                else if (ContainsIgnoreCase(subject, "спам") || ContainsIgnoreCase(body, "спам") || ContainsIgnoreCase(subject, "реклама") || ContainsIgnoreCase(body, "реклама") || ContainsIgnoreCase(subject, "пропозиція") || ContainsIgnoreCase(body, "пропозиція"))
+                {
+                    return 1;
                 }
                 else
                 {
                     return 1;
                 }
+            }
+
+            private bool ContainsIgnoreCase(string source, string value)
+            {
+                return source.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
             }
         }
         public MailSend()
@@ -80,7 +85,7 @@ namespace Test
 
         private void Review_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             MailsRev mailrev = new MailsRev();
             mailrev.Show();
             
@@ -93,7 +98,7 @@ namespace Test
             int classification = classifier.Classify(Tema.Text, MailText.Text);
 
             string connectionString = "server=localhost;port=3306;username=root;password=root;database=proger;";
-            string query = "INSERT INTO Mails (Tema, MailText, ToWhom, Class) VALUES (@Tema, @MailText, @ToWhom, @Class)";
+            string query = "INSERT INTO Mails (Tema, MailText, FromWhom, ToWhom, Class) VALUES (@Tema, @MailText, @FromWhom, @ToWhom, @Class)";
 
             try
             {
@@ -104,8 +109,10 @@ namespace Test
 
                     command.Parameters.AddWithValue("@Tema", Tema.Text);
                     command.Parameters.AddWithValue("@MailText", MailText.Text);
+                    command.Parameters.AddWithValue("@FromWhom", LoginForm.CurrentUserName);
                     command.Parameters.AddWithValue("@ToWhom", ToWhom.Text);
                     command.Parameters.AddWithValue("@Class", classification);
+                  
 
                     command.ExecuteNonQuery();
                 }
@@ -118,16 +125,12 @@ namespace Test
             }
         }
 
-        private void Tema_MouseEnter(object sender, EventArgs e)
-        {
-            if (Tema.Text == "Введіть тему вашого листа")
-            {
-                Tema.Text = "";
-                Tema.ForeColor = Color.Black;
-            }
-        }
+      
 
-        private void Tema_MouseLeave(object sender, EventArgs e)
+       
+
+
+        private void Tema_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Tema.Text))
             {
@@ -136,16 +139,7 @@ namespace Test
             }
         }
 
-        private void ToWhom_MouseEnter(object sender, EventArgs e)
-        {
-            if (ToWhom.Text == "Кому надіслати листа")
-            {
-                ToWhom.Text = "";
-                ToWhom.ForeColor = Color.Black;
-            }
-        }
-
-        private void ToWhom_MouseLeave(object sender, EventArgs e)
+        private void ToWhom_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ToWhom.Text))
             {
@@ -154,16 +148,7 @@ namespace Test
             }
         }
 
-        private void MailText_MouseEnter(object sender, EventArgs e)
-        {
-            if (MailText.Text == "Введіть текст листа")
-            {
-                MailText.Text = "";
-                MailText.ForeColor = Color.Black;
-            }
-        }
-
-        private void MailText_MouseLeave(object sender, EventArgs e)
+        private void MailText_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(MailText.Text))
             {
@@ -172,7 +157,32 @@ namespace Test
             }
         }
 
-        
+        private void Tema_Enter(object sender, EventArgs e)
+        {
+            if (Tema.Text == "Введіть тему вашого листа")
+            {
+                Tema.Text = "";
+                Tema.ForeColor = Color.Black;
+            }
+        }
+
+        private void ToWhom_Enter(object sender, EventArgs e)
+        {
+            if (ToWhom.Text == "Кому надіслати листа")
+            {
+                ToWhom.Text = "";
+                ToWhom.ForeColor = Color.Black;
+            }
+        }
+
+        private void MailText_Enter(object sender, EventArgs e)
+        {
+            if (MailText.Text == "Введіть текст листа")
+            {
+                MailText.Text = "";
+                MailText.ForeColor = Color.Black;
+            }
+        }
     }
 }
 

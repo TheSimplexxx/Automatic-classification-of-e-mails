@@ -95,8 +95,9 @@
             this.ToWhom.Name = "ToWhom";
             this.ToWhom.Size = new System.Drawing.Size(558, 53);
             this.ToWhom.TabIndex = 2;
-            this.ToWhom.MouseEnter += new System.EventHandler(this.ToWhom_MouseEnter);
-            this.ToWhom.MouseLeave += new System.EventHandler(this.ToWhom_MouseLeave);
+            this.ToWhom.Enter += new System.EventHandler(this.ToWhom_Enter);
+            this.ToWhom.Leave += new System.EventHandler(this.ToWhom_Leave);
+           
             // 
             // Tema
             // 
@@ -105,8 +106,9 @@
             this.Tema.Name = "Tema";
             this.Tema.Size = new System.Drawing.Size(558, 53);
             this.Tema.TabIndex = 1;
-            this.Tema.MouseEnter += new System.EventHandler(this.Tema_MouseEnter);
-            this.Tema.MouseLeave += new System.EventHandler(this.Tema_MouseLeave);
+            this.Tema.Enter += new System.EventHandler(this.Tema_Enter);
+            this.Tema.Leave += new System.EventHandler(this.Tema_Leave);
+       
             // 
             // MailText
             // 
@@ -116,8 +118,9 @@
             this.MailText.Name = "MailText";
             this.MailText.Size = new System.Drawing.Size(558, 430);
             this.MailText.TabIndex = 0;
-            this.MailText.MouseEnter += new System.EventHandler(this.MailText_MouseEnter);
-            this.MailText.MouseLeave += new System.EventHandler(this.MailText_MouseLeave);
+            this.MailText.Enter += new System.EventHandler(this.MailText_Enter);
+            this.MailText.Leave += new System.EventHandler(this.MailText_Leave);
+           
             // 
             // Review
             // 

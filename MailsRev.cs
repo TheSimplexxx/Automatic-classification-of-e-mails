@@ -13,61 +13,105 @@ namespace Test
 {
     public partial class MailsRev : Form
     {
-        
+        private MailSend mailSendForm;
 
         private void LoadEmails(int category)
         {
-
             string connectionString = "server=localhost;port=3306;username=root;password=root;database=proger;";
             string query;
 
             if (category == -1)
             {
-                query = "SELECT * FROM Mails";
+                query = "SELECT * FROM Mails WHERE ToWhom = @currentUserName";
             }
             else
             {
-                query = $"SELECT * FROM Mails WHERE Class = {category}";
+                query = "SELECT * FROM Mails WHERE ToWhom = @currentUserName AND Class = @category";
             }
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+                command.Parameters.AddWithValue("@currentUserName", LoginForm.CurrentUserName);
+                if (category != -1)
+                {
+                    command.Parameters.AddWithValue("@category", category);
+                }
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
 
                 emailsList.Items.Clear();
 
-                while (reader.Read())
+                foreach (DataRow row in table.Rows)
                 {
-                    string subject = reader["Tema"].ToString();
-                    string toWhom = reader["ToWhom"].ToString();
+                    string subject = row["Tema"].ToString();
+                    string fromWhom = row["FromWhom"].ToString();
 
-                   
-                    emailsList.Items.Add($"{subject} - {toWhom}");
+                    emailsList.Items.Add($"{subject} - {fromWhom}");
+                }
+            }
+        }
+        private void ShowEmail(string subject, string fromWhom)
+        {
+            string connectionString = "server=localhost;port=3306;username=root;password=root;database=proger;";
+            string query = "SELECT MailText FROM Mails WHERE Tema = @Tema AND FromWhom = @FromWhom AND ToWhom = @ToWhom";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@Tema", subject);
+                command.Parameters.AddWithValue("@FromWhom", fromWhom);
+                command.Parameters.AddWithValue("@ToWhom", LoginForm.CurrentUserName);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    string emailBody = reader["MailText"].ToString();
+                    MessageBox.Show($"Тема: {subject}\nВід: {fromWhom}\n\n{emailBody}", "Перегляд листа");
+                }
+                else
+                {
+                    MessageBox.Show("Помилка при отриманні листа", "Помилка");
+                }
+            }
+        }
+        private void emailsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (emailsList.SelectedIndex >= 0)
+            {
+                string selectedItem = emailsList.SelectedItem.ToString();
+                string[] parts = selectedItem.Split(new[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length == 2)
+                {
+                    ShowEmail(parts[0], parts[1]);
                 }
             }
         }
 
-        private void showAllButton_Click(object sender, EventArgs e)
+
+        private void showAllButton_Click_1(object sender, EventArgs e)
         {
             LoadEmails(-1);
         }
 
-        private void showSpamButton_Click(object sender, EventArgs e)
+        private void showSpamButton_Click_1(object sender, EventArgs e)
         {
             LoadEmails(1);
         }
 
-        private void showImportantButton_Click(object sender, EventArgs e)
+        private void showImportantButton_Click_1(object sender, EventArgs e)
         {
             LoadEmails(2);
         }
 
-        private void showPromotionsButton_Click(object sender, EventArgs e)
+        private void showPromotionsButton_Click_1(object sender, EventArgs e)
         {
             LoadEmails(3);
-
         }
 
         public MailsRev()
@@ -82,15 +126,18 @@ namespace Test
         }
         private void button4_Click(object sender, EventArgs e)
         {
+
+            if (mailSendForm == null || mailSendForm.IsDisposed)
+            {
+                mailSendForm = new MailSend();
+            }
+
             this.Hide();
-            MailSend mailsend = new MailSend();
-            mailsend.Show();
-        }
-
-        private void emailsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            mailSendForm.Show();
 
         }
+
+        
         private void Mainpanel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -106,6 +153,6 @@ namespace Test
         }
         Point lastpoint;
 
-       
+        
     }
 }

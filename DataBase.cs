@@ -12,7 +12,7 @@ namespace Test
 
         MySqlConnection connetion = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=proger");
 
-        public void openconetion() //соединение 
+        public void openconetion() 
 
         {
             if (connetion.State == System.Data.ConnectionState.Closed)

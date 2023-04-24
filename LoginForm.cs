@@ -9,10 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Test
 {
     public partial class LoginForm : Form
     {
+        
+        public static string CurrentUserName;
         public LoginForm()
         {
             InitializeComponent();
@@ -82,7 +85,7 @@ namespace Test
             lastpoint = new Point(e.X, e.Y);
         }
 
-        private void buttonlogin_Click(object sender, EventArgs e) //Проверка, и создание логина?
+        private void buttonlogin_Click(object sender, EventArgs e) 
         {
             String LoginUser = LogEntr.Text;
             String PassUser = PassEnter.Text;
@@ -102,13 +105,16 @@ namespace Test
 
             if (table.Rows.Count > 0)
             {
+                CurrentUserName = table.Rows[0]["login"].ToString();
+
                 this.Hide();
                 MailsRev mailrev = new MailsRev();
                 mailrev.Show();
             }
             else
+            {
                 MessageBox.Show("Таких даних не існує");
-
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -116,6 +122,11 @@ namespace Test
             this.Hide();
             RegisterForm registerForm = new RegisterForm();
             registerForm.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

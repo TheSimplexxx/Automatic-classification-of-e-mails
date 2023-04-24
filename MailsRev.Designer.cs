@@ -96,6 +96,7 @@
             this.showPromotionsButton.TabIndex = 18;
             this.showPromotionsButton.Text = "Акції";
             this.showPromotionsButton.UseVisualStyleBackColor = false;
+            this.showPromotionsButton.Click += new System.EventHandler(this.showPromotionsButton_Click_1);
             // 
             // showImportantButton
             // 
@@ -114,6 +115,7 @@
             this.showImportantButton.TabIndex = 17;
             this.showImportantButton.Text = "Важливе";
             this.showImportantButton.UseVisualStyleBackColor = false;
+            this.showImportantButton.Click += new System.EventHandler(this.showImportantButton_Click_1);
             // 
             // showSpamButton
             // 
@@ -132,6 +134,7 @@
             this.showSpamButton.TabIndex = 16;
             this.showSpamButton.Text = "Спам";
             this.showSpamButton.UseVisualStyleBackColor = false;
+            this.showSpamButton.Click += new System.EventHandler(this.showSpamButton_Click_1);
             // 
             // emailsList
             // 
@@ -161,6 +164,7 @@
             this.showAllButton.TabIndex = 14;
             this.showAllButton.Text = "Всі листи";
             this.showAllButton.UseVisualStyleBackColor = false;
+            this.showAllButton.Click += new System.EventHandler(this.showAllButton_Click_1);
             // 
             // Send
             // 
